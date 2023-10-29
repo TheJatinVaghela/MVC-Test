@@ -1,7 +1,7 @@
 
     
     
-<form action="add" method="post" enctype="multipart/form-data">
+<form  method="post" enctype="multipart/form-data">
         
         <!-- <div class="form-group"> -->
             <!-- <label for="exampleInputEmail1">Product Name</label> -->

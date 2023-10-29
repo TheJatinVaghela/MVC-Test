@@ -27,19 +27,15 @@ class controller extends model
                     $this->header_footer("home.php");
                     break;
                 case '/Add-Product':
-                    
+                    if(isset($_REQUEST["submit"])){
+                        //   $this->print_stuf_controller(array_merge($_REQUEST,$_FILES));
+                          $this->insert_product("product",array_merge($_REQUEST,$_FILES));                        
+                    }else{
+                        $this->print_stuf_controller("NOPNIOPNOP");
+                    }
                     $this->header_footer("Add-Product.php");
                     break;
-                    
-                    case "/add":
-                        if(isset($_REQUEST["submit"])){
-                            //  $this->print_stuf_controller();
-                             $this->insert_product($_REQUEST);                        
-                        }else{
-                            $this->print_stuf_controller("NOPNIOPNOP");
-                        }
-                        break;
-
+                      
                 case '/edit-Product':
                     $this->header_footer("edit-Product.php");
                     break;
