@@ -33,8 +33,8 @@ class controller extends model
                     
                     case "/add":
                         if(isset($_REQUEST["submit"])){
-                            $this->print_stuf_controller("in print stuf controller");
-                            $this->insert_product($_REQUEST["submit"]);                        
+                            //  $this->print_stuf_controller();
+                             $this->insert_product($_REQUEST);                        
                         }else{
                             $this->print_stuf_controller("NOPNIOPNOP");
                         }
@@ -52,7 +52,8 @@ class controller extends model
                     break;
             }
         }else{
-            $this->print_stuf_controller("404 not found");
+            // $this->print_stuf_controller("404 not found");
+            header("Location:home");
         }
     }
 };

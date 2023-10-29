@@ -32,8 +32,7 @@
         
         
         
-        <div class="mt-4">
-
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-        </div>
+        
+            <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
+ 
     </form>

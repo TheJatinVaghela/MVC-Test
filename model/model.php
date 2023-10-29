@@ -13,7 +13,7 @@ class model
     }
     public function print_stuf_model($stuf_name){
         echo "<pre>";
-        print_r ($stuf_name);
+        print_r($stuf_name);
         echo "</pre>";
     }
 
