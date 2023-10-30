@@ -32,6 +32,9 @@
           <a class="dropdown-item" href="see-Product">see Product</a>
         </div>
       </li>
+      <li>
+        <form action="" method="post"><button type="submit" name="clear_Products" value="clear_Products">Delete All Product</button></form>  
+      </li>
     </ul>
   </div>
 </nav>

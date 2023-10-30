@@ -1,7 +1,9 @@
 <?php 
 require_once("../model/model.php");
 class controller extends model
-{
+{   
+    public $number = 1;
+    public $products;
     public function __construct(){
         parent::__construct();
         // $this->print_stuf_controller("in controller");
@@ -18,24 +20,35 @@ class controller extends model
         require_once("../view/base_site/header.php");
         require_once("../view/base_site/$file");
         require_once("../view/base_site/footer.php");
+        return;
     } 
     public function files(){
         if($_SERVER["PATH_INFO"]){
             // $this->print_stuf_controller($_SERVER["PATH_INFO"]);
+            if(isset($_REQUEST["clear_Products"])){
+                // $this->print_stuf_controller($_REQUEST);
+                $this->clearDataBase("product");
+            }
             switch ($_SERVER["PATH_INFO"]) {
                 case '/home':
+                    $this->number = $this->getProducts("product");
+                    if(isset($_REQUEST["showProducts"])){
+
+                        $this->products = $this->showProducts();
+                    }
+                    // $this->print_stuf_controller($this->products);
                     $this->header_footer("home.php");
                     break;
                 case '/Add-Product':
                     if(isset($_REQUEST["submit"])){
-                        //   $this->print_stuf_controller(array_merge($_REQUEST,$_FILES));
-                          $this->insert_product("product",array_merge($_REQUEST,$_FILES));                        
+                         //  $this->print_stuf_controller(array_merge($_REQUEST,$_FILES));
+                           $this->insert_product("product",array_merge($_REQUEST,$_FILES));                        
                     }else{
-                        $this->print_stuf_controller("NOPNIOPNOP");
+                        // $this->print_stuf_controller("NOPNIOPNOP");
                     }
                     $this->header_footer("Add-Product.php");
                     break;
-                      
+                
                 case '/edit-Product':
                     $this->header_footer("edit-Product.php");
                     break;
@@ -52,8 +65,10 @@ class controller extends model
             header("Location:home");
         }
     }
+
+   
 };
 
 $controller = new Controller();
-$controller->__construct();
+
 ?>
