@@ -19,7 +19,7 @@ class model
     }
 
     public function insert_product($table,$product){
-        $to = "F:/Xampp/xammp/htdocs/php/MVCtest/assets/product_images/";
+        $to = "../assets/product_images/";
         $time = time();
         $uniq_id = uniqid();
 
@@ -40,7 +40,8 @@ class model
 
         
         $value = '"'.implode('","',array_values($product)) ;
-        $value .=  '","'.$to.$imgName.'"';
+        $value .=  '","'.$to.'"';
+
         $product = array_merge($product,$lastkay);
         $key =  implode(",",array_keys($product));
         
@@ -64,8 +65,9 @@ class model
 
     }
 
-    public function getProducts($table){
-        $sqlex = "select * from $table"; 
+    public function getProducts($table,$id){
+        ($id == " ")? $sqlex = "select * from $table" : $sqlex = "select * from $table WHERE id = $id"; 
+        
         $sql = $this->connection->query($sqlex);
         if ($sql->num_rows > 0) {
             // $this->print_stuf_model($sql);
@@ -88,7 +90,26 @@ class model
     public function clearDataBase($table){
       $sqlex = "TRUNCATE TABLE $table";
       $sql = $this->connection->query($sqlex);
+
+      $dir = '../assets/product_images/'; // Directory to delete files from
+
+      foreach(glob($dir.'*.{jpg,jpeg,png,gif}', GLOB_BRACE) as $file) {
+          if(is_file($file)) {
+                
+              if(unlink($file)) {  
+                //   echo "$file has been deleted";  
+              } else {  
+                //   echo "$file cannot be deleted";  
+              }  
+          }
+      }
+
     }
+
+   public function saveEditProduct($table, $product){
+    $this->print_stuf_model($table);
+    $this->print_stuf_model($product);
+   }
 }
 
 $model = new model();

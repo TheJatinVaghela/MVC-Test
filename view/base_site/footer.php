@@ -1,5 +1,5 @@
 
-<footer class="fixed-bottom">
+<footer class="stikey-bottom">
     <center>Footer</center>
 </footer>
 

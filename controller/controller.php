@@ -3,6 +3,7 @@ require_once("../model/model.php");
 class controller extends model
 {   
     public $number = 1;
+    public $chack = null;
     public $products;
     public function __construct(){
         parent::__construct();
@@ -31,11 +32,11 @@ class controller extends model
             }
             switch ($_SERVER["PATH_INFO"]) {
                 case '/home':
-                    $this->number = $this->getProducts("product");
+                    $this->number = $this->getProducts("product"," ");
                     if(isset($_REQUEST["showProducts"])){
-
                         $this->products = $this->showProducts();
-                    }
+                        $this->chack = 1;
+                    };
                     // $this->print_stuf_controller($this->products);
                     $this->header_footer("home.php");
                     break;
@@ -50,6 +51,19 @@ class controller extends model
                     break;
                 
                 case '/edit-Product':
+                    if(isset($_REQUEST["edit_product"])){
+                        // $this->print_stuf_controller($_REQUEST);
+                        $this->number = $this->getProducts("product",$_REQUEST["edit_product"]);
+                        if($this->number != 0){
+                            $this->products = $this->showProducts();
+                            $this->chack = 1;
+                        };
+                    };
+                    if(isset($_REQUEST["save_edited_product"])){
+                        // $this->print_stuf_controller($_REQUEST);
+                        // $this->print_stuf_controller($_FILES);
+                         $this->saveEditProduct("product",array_merge($_REQUEST,$_FILES));
+                    };
                     $this->header_footer("edit-Product.php");
                     break;
                 case '/see-Product':
