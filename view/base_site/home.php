@@ -12,9 +12,9 @@
                 // $this->print_stuf_controller($value);
                 ?>
                 <div class="height d-flex justify-content-center align-items-center">
-                    <form action="" method="post">
                     
                     <div class="card p-3">
+                        <form action="" method="post">
                         <div class="d-flex justify-content-between align-items-center ">
                             <div class="mt-2">
                                 <h4 class="text-uppercase">Name :- <?php echo $value->name?></h4>
@@ -30,13 +30,13 @@
                         
                         <p>description :- <?php echo $value->description?></p>
                         
-                        <button class="btn btn-danger" type="submit" value="<?php echo $value->id?>" name="add_to_cart">Add to cart</button>
+                        <button class="btn btn-danger w-100 p-3 m-2" type="submit" value="<?php echo $value->id?>" name="add_to_cart">Add to cart</button>
+                    </form>
+                    <form method="post" action="edit-Product">
+                        <button class="btn btn-danger w-100 p-3 m-2" type="submit" value="<?php echo $value->id?>" name="edit_product">Edit Product</button>                    
+                    </form>
                     </div>
                     
-                </form>
-                <form method="post" action="edit-Product">
-                    <button class="btn btn-danger" type="submit" value="<?php echo $value->id?>" name="edit_product">Edit Product</button>                    
-                </form>
                 </div>
                 <?php
             }

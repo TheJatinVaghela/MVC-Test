@@ -118,14 +118,21 @@ class model
         $valuea = array();
         foreach ($table as $key => $value) {
           $valuea[]= $value;
-          
         }
-        //  $this->print_stuf_model($imgdata); 
-        $this->upload_files($imgdata);
-        array_push($valuea,$this->to);
-        // $this->print_stuf_model($valuea); 
-        //  $this->print_stuf_model(["KEYS"=>$keys]); 
-        return $valuea;
+        if($imgdata['image']['error'] != 0){
+            // $this->print_stuf_model($imgdata); 
+            // $this->print_stuf_model($this->products[0]->image); 
+            $this->to = $this->products[0]->image;
+            array_push($valuea,$this->to);
+            return $valuea;
+        }else{
+
+            $this->upload_files($imgdata);
+            array_push($valuea,$this->to);
+            // $this->print_stuf_model($valuea); 
+            //  $this->print_stuf_model(["KEYS"=>$keys]); 
+            return $valuea;
+        }
     }
 
     public function showProducts(){
@@ -157,32 +164,44 @@ class model
     $id = array_pop($data);
     $keys = $this->getKeys($table);
     $values = $this->getValues($data,$imgdata,$keys);
+
     array_unshift($values,$id);
     // $this->print_stuf_model([$keys,$values]);
     $com = array_combine($keys, $values);
-    // $this->print_stuf_model($com);
-     $sqlex = 'update ' .$table .' set ';
+    //  $this->print_stuf_model($com);
+
+     $sql = 'update ' .$table .' set ';
     foreach ($com as $com_key => $value) {
     //    $sqlex .= $com_key .'='. '"$value"'.",";
-       $sqlex .= $com_key .'=';
-       $sqlex .= "'";
-       $sqlex .= $value;
-       $sqlex .= "'";
-       $sqlex .= ",";
+       $sql .= $com_key .'=';
+       $sql .= "'";
+       $sql .= $value;
+       $sql .= "'";
+       $sql .= ",";
 
     }
-    $sqlex= substr($sqlex, 0, -1);
-
-    $sqlex .= ' WHERE id = '.$id;
-    // $this->print_stuf_model($sqlex);
-    $sql = $this->connection->query($sqlex);
-    if($sql == 1){
-        // header("Location :home");
-        $this->remove_spesifice_imgs();
-        $this->print_stuf_model("success");
-
+    $sql= substr($sql, 0, -1);
+    $sql .= ' WHERE id = '.$id;
+    // $this->print_stuf_model($sql);
+    $sqlex = $this->connection->query($sql);
+    if($imgdata["image"]["error"] != 0){
+        // $this->print_stuf_model("in error");
+        // $this->print_stuf_model($this->products[0]->image);
+        // $this->print_stuf_model($imgdata);
+        if($sqlex !=1){
+            $this->print_stuf_model($sql);
+        }
+        header('Location:home');
     }else{
-        $this->print_stuf_model($sql);
+
+        
+        if($sqlex == 1){
+            header('Location:home');
+            // $this->print_stuf_model("success");
+            $this->remove_spesifice_imgs();
+        }else{
+            $this->print_stuf_model($sql);
+        }
     }
 
 }

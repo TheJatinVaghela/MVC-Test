@@ -63,12 +63,9 @@ class controller extends model
                         // $this->print_stuf_controller($_REQUEST);
                          $this->getProducts("product",$_REQUEST["save_edited_product"]);
                          //  $this->print_stuf_controller($_REQUEST);
-                         if($_FILES["image"]["size"] > 0){
-
-                             $this->saveEditProduct("product",$_REQUEST,$_FILES);
-                         }else{
-                            $this->print_stuf_controller("no FILES");
-                         }
+                        // $this->print_stuf_controller($_FILES["image"]);
+                        $this->saveEditProduct("product",$_REQUEST,$_FILES);
+                        
                     };
                     $this->header_footer("edit-Product.php");
                     break;
