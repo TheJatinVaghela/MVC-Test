@@ -13,17 +13,17 @@
                             <div class="mt-2">
                             Name :- <input class="text-uppercase" name="name" value="<?php echo $value->name?>" required></input>
                                 <div class="mt-5">
-                                quantity :-  <input class="text-uppercase mb-0" name="quantity" type="number" value="<?php echo $value->quantity?>" required> </input>
-                                price :-    <input class="main-heading mt-0" name="price" type="number" value="<?php echo $value->price?>" required></input>
+                                    price :-    <input class="main-heading mt-0" name="price" type="number" value="<?php echo $value->price?>" required></input>
+                                    description :- <input type="text" name="description" value="<?php echo $value->description?>"></input>
                                 </div>
                             </div>
-                            <div class="image">
-                                <!-- <img src="" width="200"> -->
-                               Image:- <input type="file" accept="image/*" id="image" required name="image"/>
-                            </div>
+                            quantity :-  <input class="text-uppercase mb-0" name="quantity" type="number" value="<?php echo $value->quantity?>" required> </input>
                         </div>
                         
-                        description :- <input type="text" name="description" value="<?php echo $value->description?>"></input>
+                        <div class="image">
+                            <!-- <img src="" width="200"> -->
+                            Image:- <input type="file" accept="image/*" id="image" name="image"/>
+                        </div>
                         
                         <button class="btn btn-danger" type="submit" value="<?php echo $value->id?>" name="save_edited_product">save product</button>
                     </div>
