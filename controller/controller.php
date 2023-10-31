@@ -61,8 +61,9 @@ class controller extends model
                     };
                     if(isset($_REQUEST["save_edited_product"])){
                         // $this->print_stuf_controller($_REQUEST);
-                        // $this->print_stuf_controller($_FILES);
-                         $this->saveEditProduct("product",array_merge($_REQUEST,$_FILES));
+                         $this->getProducts("product",$_REQUEST["save_edited_product"]);
+                         $this->remove_spesifice_imgs();
+                         $this->saveEditProduct("product",$_REQUEST,$_FILES);
                     };
                     $this->header_footer("edit-Product.php");
                     break;

@@ -3,6 +3,7 @@ class model
 {
     public $connection;
     public $products;
+    public $to = "../assets/product_images/";
     public function __construct(){
         // $this->print_stuf_model("in model");
         try {
@@ -19,28 +20,30 @@ class model
     }
 
     public function insert_product($table,$product){
-        $to = "../assets/product_images/";
-        $time = time();
-        $uniq_id = uniqid();
+        //  $to = $this->to;
+        // $time = time();
+        // $uniq_id = uniqid();
 
-        $combined_id = $time.$uniq_id;
+        // $combined_id = $time.$uniq_id;
 
         $lastkay = array_slice($product,-1,1);//array_name , starting position ,ending position
         array_pop($product);
         array_pop($product);
-        $imgName = $combined_id.$lastkay['image']["name"];
-        $to .= $imgName;
-        try {
-            move_uploaded_file($lastkay['image']["tmp_name"],$to);
-        } catch (\Throwable $th) {
-            $this->print_stuf_model("somthing went wrong while uploading product Images");
-        }
+        // $imgName = $combined_id.$lastkay['image']["name"];
+        // $to .= $imgName;
+        // try {
+        //     move_uploaded_file($lastkay['image']["tmp_name"],$to);
+        // } catch (\Throwable $th) {
+        //     $this->print_stuf_model("somthing went wrong while uploading product Images");
+        // }
+
+        $this->upload_files($lastkay);
        
         $this->print_stuf_model($lastkay);
 
         
         $value = '"'.implode('","',array_values($product)) ;
-        $value .=  '","'.$to.'"';
+        $value .=  '","'.$this->to.'"';
 
         $product = array_merge($product,$lastkay);
         $key =  implode(",",array_keys($product));
@@ -83,6 +86,46 @@ class model
         }
     }
 
+    public function upload_files($imgdata){
+         
+         $time = time();
+         $uniq_id = uniqid();
+ 
+         $combined_id = $time.$uniq_id;
+
+         $imgName = $combined_id.$imgdata['image']["name"];
+         $this->to .= $imgName;
+         
+        //  $this->print_stuf_model($imgdata['image']["tmp_name"]);
+        //  $this->print_stuf_model($to);
+        /* try {
+             move_uploaded_file($imgdata['image']["tmp_name"],$this->to );
+         } catch (\Throwable $th) {
+             $this->print_stuf_model("somthing went wrong while uploading product Images");
+         }*/
+    }
+    public function getKeys($table){
+        // $this->print_stuf_model(array_keys($this->products[0]));
+        $keya = array();
+        foreach ($this->products[0] as $key => $value) {
+          $keya[]= $key;
+        }
+        return $keya;
+        //  $this->print_stuf_model($keya); 
+    }
+    public function getValues($table,$imgdata){
+        // $this->print_stuf_model(array_keys($this->products[0]));
+        $valuea = array();
+        foreach ($table as $key => $value) {
+          $valuea[]= $value;
+        }
+        //  $this->print_stuf_model($imgdata); 
+        $this->upload_files($imgdata);
+        array_push($valuea,$this->to);
+        // $this->print_stuf_model($valuea); 
+        return $valuea;
+    }
+
     public function showProducts(){
         // $this->print_stuf_model($this->products);
         return $this->products;
@@ -106,12 +149,27 @@ class model
 
     }
 
-   public function saveEditProduct($table, $product){
-    $this->print_stuf_model($table);
-    $this->print_stuf_model($product);
+   public function saveEditProduct($table,$data , $imgdata){
+    // $this->print_stuf_model($table);
+    // $this->print_stuf_model($this->products);
+    array_pop($data);
+    $keys = $this->getKeys($table);
+    $values = $this->getValues($data,$imgdata);
+    // $sqlex = "update $table set";
+    $this->print_stuf_model([$keys,$values]);
+    $com = array_combine($keys, $values);
+    // $this->print_stuf_model($com);
    }
-}
 
+   public function remove_spesifice_imgs(){
+        // $this->print_stuf_model("in remove_spesifice_imgs");
+         $this->print_stuf_model($this->products);
+        $img= $this->products[0]->image;
+        if(is_file($img)) {
+            // unlink($img);
+        }
+}
+}
 $model = new model();
 
 ?>
